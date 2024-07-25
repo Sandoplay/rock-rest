@@ -22,32 +22,36 @@
             let data = await responseItem.text();
 
 
-            url = "http://localhost:8080/score/wins"
-            if (true){
-                if (clientResponse == 'paper'){
+
+            console.log("where is loss");
+            result = 'loss';
+            url = "http://localhost:8080/score/losses"
+
+
+            if (clientResponse === data){
+                result = 'tie';
+                url = "http://localhost:8080/score/ties"
+            }else if (clientResponse === 'paper'){
                     console.log("im in rock win situations");
-                    if (data == 'rock'){
+                    if (data === 'rock'){
                         result = 'win';
+                        url = "http://localhost:8080/score/wins"
+
                     }
-                } if (clientResponse == 'rock'){
-                    if (data == 'scissors'){
-                        result = 'win';
-                    }
-                } if (clientResponse == 'scissors'){
-                    if (data == 'paper'){
-                        result = 'win';
-                    }
-                } if (clientResponse == data){
-                    result = 'tie';
-                    url = "http://localhost:8080/score/ties"
+            }else if (clientResponse === 'rock'){
+                if (data === 'scissors'){
+                    result = 'win';
+                    url = "http://localhost:8080/score/wins"
+
+                }
+            }else if (clientResponse === 'scissors'){
+                if (data === 'paper'){
+                    result = 'win';
+                    url = "http://localhost:8080/score/wins"
+
                 }
             }
-            else {
-                console.log("where is loss");
-                result = 'loss';
-                url = "http://localhost:8080/score/losses"
-            }
-            
+
 
 
             // url = "http://localhost:8080/score/wins"
