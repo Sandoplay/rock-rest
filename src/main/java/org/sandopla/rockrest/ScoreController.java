@@ -13,6 +13,23 @@ public class ScoreController {
         return "Balls maintained";
     }
 
+    @PutMapping("/score")
+    public Score replaceScore(@RequestBody Score newScore){
+        score = newScore;
+        return score;
+    }
+
+    @DeleteMapping("/score")
+    public void deleteScore(){
+        score = null;
+    }
+
+    @PatchMapping("/score/wins")
+    public Score updateWins(@RequestParam(name="new-value")int newValue){
+        score.wins = newValue;
+        return score;
+    }
+
     @PostMapping("/score/wins")
     public Score increaseWins(){
         score.wins++;
