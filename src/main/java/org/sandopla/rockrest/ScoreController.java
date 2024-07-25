@@ -2,15 +2,28 @@ package org.sandopla.rockrest;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 @RestController
 @CrossOrigin(maxAge = 3600)
 public class ScoreController {
 
+    String item = "";
 
     static Score score = new Score(30,20, 10);
     @GetMapping("/health-check")
     public String PublicGetHealth(){
         return "Balls maintained";
+    }
+
+    @GetMapping("/getItem")
+    public String getItem(){
+        List<String> rockPaperList = Arrays.asList("rock", "paper", "scissors");
+        Random rand = new Random();
+        item = rockPaperList.get(rand.nextInt(rockPaperList.size()));
+        return item;
     }
 
     @PutMapping("/score")

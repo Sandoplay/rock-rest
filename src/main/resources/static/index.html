@@ -12,30 +12,58 @@
 
         <i><div id="results"></div></i>
         <br/>
-        <span id="wins"></span><span id="losses"></span><span id="ties"></span>
+        <span id="wins"> </span> <span id="losses"> </span> <span id="ties"></span>
     </body>
 
     <script>
 
         play = async function(clientResponse){
+            let responseItem = await fetch("http://localhost:8080/getItem", {method: "GET"});
+            let data = await responseItem.text();
+
 
             url = "http://localhost:8080/score/wins"
-            result = 'win';
-            if (clientResponse == 'rock'){
-                result = 'tie';
-                url = "http://localhost:8080/score/ties"
+            if (true){
+                if (clientResponse == 'paper'){
+                    console.log("im in rock win situations");
+                    if (data == 'rock'){
+                        result = 'win';
+                    }
+                } if (clientResponse == 'rock'){
+                    if (data == 'scissors'){
+                        result = 'win';
+                    }
+                } if (clientResponse == 'scissors'){
+                    if (data == 'paper'){
+                        result = 'win';
+                    }
+                } if (clientResponse == data){
+                    result = 'tie';
+                    url = "http://localhost:8080/score/ties"
+                }
             }
-            if (clientResponse == 'scissors'){
+            else {
+                console.log("where is loss");
                 result = 'loss';
                 url = "http://localhost:8080/score/losses"
             }
+            
+
+
+            // url = "http://localhost:8080/score/wins"
+            // result = 'win';
+            
+            // if (clientResponse == 'scissors'){
+            //     result = 'loss';
+            //     url = "http://localhost:8080/score/losses"
+            // }
 
             try{
                 const response = await fetch(url, {method: "POST"});
                 const theScore = await response.json();
-                document.getElementById('wins').innerHTML = "<b>Wins: </b>" + theScore.wins;
-                document.getElementById('losses').innerHTML = "<b>Losses: </b>" + theScore.losses;
-                document.getElementById('ties').innerHTML = "<b>Ties: </b>" + theScore.ties;
+                document.getElementById('wins').innerHTML = "<b>Wins: </b> " + theScore.wins;
+                document.getElementById('losses').innerHTML = "<b>Losses: </b> " + theScore.losses;
+                document.getElementById('ties').innerHTML = "<b>Ties: </b> " + theScore.ties;
 
             }catch (error){
                 console.log(error.message);
