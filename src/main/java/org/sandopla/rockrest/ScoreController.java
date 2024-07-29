@@ -32,6 +32,7 @@ public class ScoreController {
         return score;
     }
 
+
     @DeleteMapping("/score")
     public void deleteScore(){
         score = null;
