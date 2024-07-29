@@ -1,15 +1,21 @@
 package org.sandopla.rockrest;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Score {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "score_sequence",
+            sequenceName = "score_sequence",
+            allocationSize = 1
+    )
+
+    @GeneratedValue(
+            strategy = GenerationType.AUTO,
+            generator = "score_sequence"
+    )
     private Integer id;
 
     public Integer getId() {
