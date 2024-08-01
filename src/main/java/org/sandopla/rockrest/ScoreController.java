@@ -1,21 +1,39 @@
 package org.sandopla.rockrest;
 
+import org.sandopla.rockrest.repository.ScoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
 @CrossOrigin(maxAge = 3600)
 public class ScoreController {
 
+    @Autowired
+    ScoreRepository scoreRepository;
+    private final int userId = 1;
+
+    public ScoreController(ScoreRepository scoreRepository) {
+        this.scoreRepository = scoreRepository;
+        score = scoreRepository.findById(userId).get();
+    }
+
     String item = "";
 
-    static Score score = new Score(30,20, 10);
+    static Score score = new Score(0,0, 0);
+
+    @GetMapping("/getUser")
+    public Optional<Score> getUser() {
+        return scoreRepository.findById(1);
+    }
+
     @GetMapping("/health-check")
     public String PublicGetHealth(){
-        return "Balls maintained";
+        return "Balls maintained " + score.toString();
     }
 
     @GetMapping("/getItem")
@@ -28,8 +46,10 @@ public class ScoreController {
 
     @PutMapping("/score")
     public Score replaceScore(@RequestBody Score newScore){
-        score = newScore;
-        return score;
+        //score = scoreRepository.findById(userId).get();
+        //newScore.setId(score.getId());
+        scoreRepository.save(newScore);
+        return newScore;
     }
 
 
@@ -47,18 +67,21 @@ public class ScoreController {
     @PostMapping("/score/wins")
     public Score increaseWins(){
         score.wins++;
+        scoreRepository.save(score);
         return score;
     }
 
     @PostMapping("/score/losses")
     public Score increaseLosses(){
         score.losses++;
+        scoreRepository.save(score);
         return score;
     }
 
     @PostMapping("/score/ties")
     public Score increaseTies(){
         score.ties++;
+        scoreRepository.save(score);
         return score;
     }
 

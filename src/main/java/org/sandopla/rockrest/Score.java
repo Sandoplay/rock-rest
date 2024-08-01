@@ -64,4 +64,14 @@ public class Score {
     int wins;
     int ties;
     int losses;
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "id=" + id +
+                ", wins=" + wins +
+                ", losses=" + losses +
+                ", ties=" + ties +
+                '}';
+    }
 }
