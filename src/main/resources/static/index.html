@@ -63,8 +63,8 @@
             // }
 
             try{
-                const userResponse = await fetch("http://localhost:8080/getUser", {method: "GET"})
                 const response = await fetch(url, {method: "POST"});
+                const userResponse = await fetch("http://localhost:8080/getUser", {method: "GET"})
                 const theScore = await userResponse.json();
                 document.getElementById('wins').innerHTML = "<b>Wins: </b> " + theScore.wins;
                 document.getElementById('losses').innerHTML = "<b>Losses: </b> " + theScore.losses;
